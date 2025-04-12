@@ -110,96 +110,135 @@ const BookCard: React.FC<BookCardProps> = ({ book, onStatusChange, onDelete }) =
     }
   };
   return (
-    <div className="border rounded-lg p-4 shadow-md mb-4 bg-white dark:bg-gray-800 overflow-hidden"> {/* Added dark bg, overflow */}
-      {/* Wrap text content for spacing */}
-      <div className="space-y-1">
-        <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{book.title}</h3>
-      {book.coverImageUrl && (
-        <div className="relative w-full h-48 mb-3"> {/* Container for Image */}
+    <div className="border border-purple-100 dark:border-purple-800 rounded-xl p-0 shadow-lg mb-6 bg-white dark:bg-purple-900 overflow-hidden transition-all hover:shadow-xl"> 
+      {/* Book cover image */}
+      {book.coverImageUrl ? (
+        <div className="relative w-full h-56"> {/* Increased height for better visual */}
           <Image
             src={`http://localhost:3001${book.coverImageUrl}`}
             alt={`Cover for ${book.title}`}
-            fill // Use fill to cover the container
-            style={{ objectFit: 'cover' }} // Use style for objectFit with fill
-            className="rounded-t-lg" // Apply rounding to Image
+            fill
+            style={{ objectFit: 'cover' }}
+            className="rounded-t-xl" 
             onError={(e) => {
-              // Hide the image element if the image fails to load
               (e.target as HTMLImageElement).style.display = 'none';
-              // Optionally log the error or show a placeholder
               console.error(`Failed to load image: ${(e.target as HTMLImageElement).src}`);
             }}
-            priority={false} // Set priority based on whether it's LCP
-            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw" // Example sizes, adjust as needed
+            priority={false}
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
           />
         </div>
+      ) : (
+        <div className="bg-gradient-to-r from-purple-500 to-purple-700 h-24 rounded-t-xl flex items-center justify-center">
+          <span className="text-white text-xl font-bold px-4 text-center">{book.title}</span>
+        </div>
       )}
-        <p className="text-gray-700 dark:text-gray-300">Author: {book.author}</p>
-        {book.genre && <p className="text-gray-600 dark:text-gray-400">Genre: {book.genre}</p>}
-        <p className="text-gray-600 dark:text-gray-400">Location: {book.location}</p>
-        <p className="text-gray-600 dark:text-gray-400">Contact: {book.contact}</p>
-      {/* Use ternary for conditional owner info */}
-      {book.ownerInfo ? (
-          <div className="text-sm text-gray-500 dark:text-gray-400">
-            <p>Owner: {book.ownerInfo.name} ({book.ownerInfo.email})</p>
-            {book.ownerInfo.mobile && <p>Mobile: {book.ownerInfo.mobile}</p>}
+      
+      {/* Book details */}
+      <div className="p-5 space-y-3">
+        <div className="flex justify-between items-start">
+          <h3 className="text-xl font-bold text-purple-900 dark:text-white line-clamp-2">{book.title}</h3>
+          <span className={`px-3 py-1 rounded-full text-xs font-semibold ${book.status === 'Available' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200' : 'bg-purple-200 text-purple-800 dark:bg-purple-900 dark:text-purple-200'}`}>
+            {book.status}
+          </span>
+        </div>
+        
+        <div className="space-y-2">
+          <p className="text-purple-800 dark:text-purple-200 font-medium">By {book.author}</p>
+          {book.genre && <p className="text-purple-600 dark:text-purple-300 text-sm">Genre: {book.genre}</p>}
+          
+          <div className="flex items-center text-purple-600 dark:text-purple-300 text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            {book.location}
           </div>
-        ) : null}
-      </div> {/* End of text content wrapper */}
-      <div className="flex items-center justify-between mt-2">
-        <span className={`px-2 py-1 rounded text-sm ${book.status === 'Available' ? 'bg-green-200 text-green-800 dark:bg-green-900 dark:text-green-200' : 'bg-yellow-200 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'}`}> {/* Added dark status styles */}
-          Status: {book.status}
-        </span>
-        {isOwner && ( // Only show buttons if the current user is the owner
-          // Wrapper div for owner buttons
-          <div className="flex space-x-2"> {/* Added flex and spacing for owner buttons */}
-            {/* Status Toggle Button */}
-            <button
-              onClick={handleToggleStatus}
-              disabled={isLoading || isDeleting} // Also disable if deleting
-              className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
-                isLoading
-                  ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                  : book.status === 'Available'
-                  ? 'bg-yellow-500 hover:bg-yellow-600 text-white'
-                  : 'bg-green-500 hover:bg-green-600 text-white'
-              }`}
-            >
-              {isLoading
-                ? 'Updating...'
+          
+          <div className="flex items-center text-purple-600 dark:text-purple-300 text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            </svg>
+            {book.contact}
+          </div>
+        </div>
+        
+        {/* Owner info with improved styling */}
+        {book.ownerInfo && (
+          <div className="mt-3 pt-3 border-t border-purple-100 dark:border-purple-700">
+            <div className="flex items-center text-sm text-purple-600 dark:text-purple-300">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              <span>{book.ownerInfo.name} • {book.ownerInfo.email}</span>
+            </div>
+            {book.ownerInfo.mobile && (
+              <div className="flex items-center text-sm text-purple-600 dark:text-purple-300 mt-1">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+                <span>{book.ownerInfo.mobile}</span>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+      
+      {/* Action buttons with improved styling */}
+      {isOwner && (
+        <div className="px-5 pb-5 pt-0 flex flex-wrap gap-2">
+          <button
+            onClick={handleToggleStatus}
+            disabled={isLoading || isDeleting}
+            className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${
+              isLoading
+                ? 'bg-purple-100 text-purple-400 cursor-not-allowed'
                 : book.status === 'Available'
-                ? 'Mark as Rented/Exchanged'
-                : 'Mark as Available'}
-            </button>
+                ? 'bg-purple-500 hover:bg-purple-600 text-white shadow-sm hover:shadow'
+                : 'bg-purple-600 hover:bg-purple-700 text-white shadow-sm hover:shadow'
+            }`}
+          >
+            {isLoading
+              ? 'Updating...'
+              : book.status === 'Available'
+              ? 'Mark Rented'
+              : 'Mark Available'}
+          </button>
 
-            {/* Delete Button */}
-            <button
-              onClick={handleDelete}
-              disabled={isDeleting || isLoading} // Disable if deleting or updating status
-              className={`px-3 py-1 rounded text-sm font-medium transition-colors ${ /* Removed ml-2 */
-                isDeleting
-                  ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                  : 'bg-red-500 hover:bg-red-600 text-white'
-              }`}
-            >
-              {isDeleting ? 'Deleting...' : 'Delete'}
-            </button>
+          <Link
+            href={`/edit-book/${book.id}`}
+            className={`flex-1 py-2 rounded-lg text-sm font-medium text-center transition-all ${ 
+              (isLoading || isDeleting) 
+              ? 'bg-purple-100 text-purple-400 cursor-not-allowed pointer-events-none' 
+              : 'bg-purple-500 hover:bg-purple-600 text-white shadow-sm hover:shadow' 
+            }`}
+            aria-disabled={isLoading || isDeleting}
+            onClick={(e) => { if (isLoading || isDeleting) e.preventDefault(); }}
+          >
+            Edit
+          </Link>
 
-            {/* Edit Link/Button (Updated for Next.js 13+ App Router) */}
-            <Link
-              href={`/edit-book/${book.id}`}
-              className={`px-3 py-1 rounded text-sm font-medium transition-colors ${ (isLoading || isDeleting) ? 'bg-gray-300 text-gray-500 cursor-not-allowed pointer-events-none' : 'bg-blue-500 hover:bg-blue-600 text-white' }`} /* Removed ml-2 */
-              aria-disabled={isLoading || isDeleting} // Add aria-disabled for accessibility
-              onClick={(e) => { if (isLoading || isDeleting) e.preventDefault(); }} // Prevent navigation if disabled
-            >
-              Edit
-            </Link>
-          </div> // End of wrapper div for owner buttons
-        )} {/* End of isOwner conditional block */}
-      </div> {/* End of outer flex container */}
-      {/* Display Status Update Error */}
-      {statusError && <p className="text-red-600 text-sm mt-1">{statusError}</p>} {/* Adjusted error style */}
-      {/* Display Delete Error */}
-      {deleteError && <p className="text-red-600 text-sm mt-1">{deleteError}</p>} {/* Adjusted error style */}
+          <button
+            onClick={handleDelete}
+            disabled={isDeleting || isLoading}
+            className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${
+              isDeleting
+                ? 'bg-purple-100 text-purple-400 cursor-not-allowed'
+                : 'bg-red-500 hover:bg-red-600 text-white shadow-sm hover:shadow'
+            }`}
+          >
+            {isDeleting ? 'Deleting...' : 'Delete'}
+          </button>
+        </div>
+      )}
+      
+      {/* Error messages */}
+      {(statusError || deleteError) && (
+        <div className="px-5 pb-4">
+          {statusError && <p className="text-red-600 text-sm">{statusError}</p>}
+          {deleteError && <p className="text-red-600 text-sm">{deleteError}</p>}
+        </div>
+      )}
     </div>
   );
 };

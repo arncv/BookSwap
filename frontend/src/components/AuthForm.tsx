@@ -106,7 +106,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ formType, onSuccess }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-md mx-auto p-6 border rounded-lg shadow-md bg-white dark:bg-gray-800"> {/* Increased spacing, added bg */}
+    <form onSubmit={handleSubmit} className="space-y-6 max-w-md mx-auto p-6 border rounded-lg shadow-md bg-white"> {/* Increased spacing, added bg */}
       <h2 className="text-2xl font-semibold text-center mb-6">
         {formType === 'login' ? 'Login' : 'Register'}
       </h2>
@@ -121,7 +121,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ formType, onSuccess }) => {
               value={name}
               onChange={handleInputChange(setName, 'name')}
               required
-              className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 ${validationErrors.name ? 'border-red-500' : 'border-gray-300'}`}
+              className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 ${validationErrors.name ? 'border-red-500' : 'border-purple-100'}`}
             />
             {validationErrors.name && <p className="text-red-600 text-sm mt-1">{validationErrors.name}</p>} {/* Adjusted error style */}
           </div>
@@ -133,7 +133,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ formType, onSuccess }) => {
               value={mobile}
               onChange={handleInputChange(setMobile, 'mobile')}
               required
-              className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 ${validationErrors.mobile ? 'border-red-500' : 'border-gray-300'}`}
+              className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 ${validationErrors.mobile ? 'border-red-500' : 'border-purple-100'}`}
             />
             {validationErrors.mobile && <p className="text-red-600 text-sm mt-1">{validationErrors.mobile}</p>} {/* Adjusted error style */}
           </div>
@@ -148,7 +148,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ formType, onSuccess }) => {
           value={email}
           onChange={handleInputChange(setEmail, 'email')}
           required
-          className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 ${validationErrors.email ? 'border-red-500' : 'border-gray-300'}`}
+          className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 ${validationErrors.email ? 'border-red-500' : 'border-purple-100'}`}
         />
         {validationErrors.email && <p className="text-red-600 text-sm mt-1">{validationErrors.email}</p>} {/* Adjusted error style */}
       </div>
@@ -161,7 +161,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ formType, onSuccess }) => {
           value={password}
           onChange={handleInputChange(setPassword, 'password')}
           required
-          className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 ${validationErrors.password ? 'border-red-500' : 'border-gray-300'}`}
+          className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 ${validationErrors.password ? 'border-red-500' : 'border-purple-100'}`}
         />
         {validationErrors.password && <p className="text-red-600 text-sm mt-1">{validationErrors.password}</p>} {/* Adjusted error style */}
       </div>
@@ -177,7 +177,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ formType, onSuccess }) => {
                 value="Seeker"
                 checked={role === 'Seeker'}
                 onChange={() => setRole('Seeker')}
-                className="mr-1 focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300"
+                className="mr-1 focus:ring-purple-500 h-4 w-4 text-purple-600 border-purple-100"
               />
               Book Seeker
             </label>
@@ -188,7 +188,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ formType, onSuccess }) => {
                 value="Owner"
                 checked={role === 'Owner'}
                 onChange={() => setRole('Owner')}
-                className="mr-1 focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300"
+                className="mr-1 focus:ring-purple-500 h-4 w-4 text-purple-600 border-purple-100"
               />
               Book Owner
             </label>
@@ -202,7 +202,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ formType, onSuccess }) => {
       <button
         type="submit"
         disabled={isLoading}
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:opacity-50"
+        className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:opacity-50"
       >
         {isLoading ? 'Processing...' : (formType === 'login' ? 'Login' : 'Register')}
       </button>

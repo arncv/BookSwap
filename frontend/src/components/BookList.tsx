@@ -123,39 +123,50 @@ const BookList: React.FC = () => { // Restore React.FC for clarity
     setError(null); // Clear any previous errors
   }; // End of handleDeleteBook
 
-  if (loading) {
-    return <p className="text-center mt-8">Loading books...</p>;
-  }
-
-  if (error) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="p-4 text-center text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800 border border-red-300" role="alert">
-          <span className="font-medium">Error:</span> {error}
-        </div>
-      </div>
-    );
-  }
-
-  if (books.length === 0) {
-    return <p className="text-center mt-8">No books available at the moment.</p>;
-  }
-
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* Render the FilterForm */}
+    <div className="container mx-auto px-4">
       <FilterForm onFilterChange={handleFilterChange} />
-      <h2 className="text-2xl font-bold mb-6 text-center">Available Books</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {books.map((book) => (
-          <BookCard
-            key={book.id}
-            book={book}
-            onStatusChange={handleStatusUpdate} // Pass the handler function
-            onDelete={handleDeleteBook} // Pass the delete handler function
-          />
-        ))}
-      </div>
+      
+      {loading ? (
+        <div className="flex justify-center items-center py-12">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"></div>
+        </div>
+      ) : error ? (
+        <div className="bg-purple-50 border border-purple-200 text-purple-700 px-6 py-8 rounded-xl text-center my-8 dark:bg-purple-900/20 dark:border-purple-800 dark:text-purple-400">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 mx-auto mb-3 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <p className="text-lg font-medium">{error}</p>
+          <p className="mt-2 text-sm">Please try again later or contact support if the problem persists.</p>
+        </div>
+      ) : books.length === 0 ? (
+        <div className="bg-purple-50 border border-purple-200 text-purple-700 px-6 py-12 rounded-xl text-center my-8 dark:bg-purple-900/20 dark:border-purple-800 dark:text-purple-400">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto mb-4 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
+          </svg>
+          <p className="text-xl font-medium mb-2">No books found</p>
+          <p className="text-sm max-w-md mx-auto">Try adjusting your filters or add some books to the community!</p>
+          <a href="/add-book" className="inline-block mt-6 bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-6 rounded-full transition-all shadow-md hover:shadow-lg">
+            Add Your First Book
+          </a>
+        </div>
+      ) : (
+        <>
+          <p className="text-purple-500 dark:text-purple-400 mb-6 text-sm">
+            Showing {books.length} book{books.length !== 1 ? 's' : ''}
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {books.map((book) => (
+              <BookCard
+                key={book.id}
+                book={book}
+                onStatusChange={handleStatusUpdate}
+                onDelete={handleDeleteBook}
+              />
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }; // Correct closing brace for BookList component

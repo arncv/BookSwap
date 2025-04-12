@@ -28,7 +28,7 @@ const AddBookForm: React.FC<AddBookFormProps> = ({ initialData, bookId }) => { /
   const [author, setAuthor] = useState('');
   const [genre, setGenre] = useState('');
   const [location, setLocation] = useState('');
-  const [contact, setContact] = useState(user?.email || ''); // Default to user email if available
+  const [contact, setContact] = useState(''); // Initialize empty, set in useEffect
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null); // For API errors
   const [success, setSuccess] = useState<string | null>(null);
@@ -235,8 +235,8 @@ const AddBookForm: React.FC<AddBookFormProps> = ({ initialData, bookId }) => { /
   const isEditing = !!bookId; // Define isEditing in the component scope for JSX access
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md dark:bg-gray-800"> {/* Increased spacing */}
-      <h2 className="text-2xl font-semibold text-center mb-6 text-gray-800 dark:text-white">
+    <form onSubmit={handleSubmit} className="space-y-6 max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md dark:bg-gray-800">
+      <h2 className="text-2xl font-semibold text-center mb-6 text-purple-700 dark:text-white">
         {isEditing ? 'Edit Book Details' : 'Add a New Book'}
       </h2>
       {/* Display API Error prominently */}
@@ -255,7 +255,7 @@ const AddBookForm: React.FC<AddBookFormProps> = ({ initialData, bookId }) => { /
           value={title}
           onChange={handleInputChange(setTitle, 'title')}
           required
-          className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white ${validationErrors.title ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'}`}
+          className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white ${validationErrors.title ? 'border-red-500' : 'border-purple-100 dark:border-gray-600'}`}
         />
         {validationErrors.title && <p className="text-red-600 text-sm mt-1">{validationErrors.title}</p>} {/* Adjusted error style */}
       </div>
@@ -268,7 +268,7 @@ const AddBookForm: React.FC<AddBookFormProps> = ({ initialData, bookId }) => { /
           value={author}
           onChange={handleInputChange(setAuthor, 'author')}
           required
-          className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white ${validationErrors.author ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'}`}
+          className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white ${validationErrors.author ? 'border-red-500' : 'border-purple-100 dark:border-gray-600'}`}
         />
         {validationErrors.author && <p className="text-red-600 text-sm mt-1">{validationErrors.author}</p>} {/* Adjusted error style */}
       </div>
@@ -280,7 +280,7 @@ const AddBookForm: React.FC<AddBookFormProps> = ({ initialData, bookId }) => { /
           id="genre"
           value={genre}
           onChange={handleInputChange(setGenre, 'genre')} // No validation needed, but clear errors
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+          className="mt-1 block w-full px-3 py-2 border border-purple-100 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
         />
         {/* No validation error display for optional field */}
       </div>
@@ -293,7 +293,7 @@ const AddBookForm: React.FC<AddBookFormProps> = ({ initialData, bookId }) => { /
           value={location}
           onChange={handleInputChange(setLocation, 'location')}
           required
-          className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white ${validationErrors.location ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'}`}
+          className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white ${validationErrors.location ? 'border-red-500' : 'border-purple-100 dark:border-gray-600'}`}
         />
         {validationErrors.location && <p className="text-red-600 text-sm mt-1">{validationErrors.location}</p>} {/* Adjusted error style */}
       </div>
@@ -324,7 +324,7 @@ const AddBookForm: React.FC<AddBookFormProps> = ({ initialData, bookId }) => { /
           value={contact}
           onChange={handleInputChange(setContact, 'contact')}
           required
-          className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white ${validationErrors.contact ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'}`}
+          className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white ${validationErrors.contact ? 'border-red-500' : 'border-purple-100 dark:border-gray-600'}`}
         />
         {validationErrors.contact && <p className="text-red-600 text-sm mt-1">{validationErrors.contact}</p>} {/* Adjusted error style */}
       </div>
@@ -339,7 +339,7 @@ const AddBookForm: React.FC<AddBookFormProps> = ({ initialData, bookId }) => { /
       <button
         type="submit"
         disabled={isLoading || !user || user.role !== 'Owner'}
-        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-indigo-500 dark:hover:bg-indigo-600"
+        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-purple-500 dark:hover:bg-purple-600"
       >
         {isLoading ? (isEditing ? 'Updating Book...' : 'Adding Book...') : (isEditing ? 'Update Book' : 'Add Book')}
       </button>
