@@ -1,0 +1,74 @@
+{
+  "users": [
+    {
+      "id": "116d372f-29d6-46c0-8993-eef3170aba0e",
+      "name": "Arnav",
+      "mobileNumber": "999999999",
+      "email": "test@test.com",
+      "password": "1234",
+      "role": "Owner"
+    },
+    {
+      "id": "22222222-2222-2222-2222-222222222222",
+      "name": "Book Lover",
+      "mobileNumber": "888888888",
+      "email": "owner@example.com",
+      "password": "password",
+      "role": "Owner"
+    },
+    {
+      "id": "33333333-3333-3333-3333-333333333333",
+      "name": "Reader",
+      "mobileNumber": "777777777",
+      "email": "seeker@example.com",
+      "password": "password",
+      "role": "Seeker"
+    }
+  ],
+  "books": [
+    {
+      "id": "764b1133-85d0-4b73-8f1e-694bf9bdb6f9",
+      "title": "1984",
+      "author": "George Orwell",
+      "genre": "Dystopia",
+      "location": "New Delhi",
+      "contact": "999999999",
+      "ownerId": "116d372f-29d6-46c0-8993-eef3170aba0e",
+      "status": "Available",
+      "coverImageUrl": null
+    },
+    {
+      "id": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
+      "title": "Dune",
+      "author": "Frank Herbert",
+      "genre": "Sci-Fi",
+      "location": "Mumbai",
+      "contact": "owner@example.com",
+      "ownerId": "22222222-2222-2222-2222-222222222222",
+      "status": "Available",
+      "coverImageUrl": null
+    },
+    {
+      "id": "cccccccc-cccc-cccc-cccc-cccccccccccc",
+      "title": "To Kill a Mockingbird",
+      "author": "Harper Lee",
+      "genre": "Fiction",
+      "location": "New Delhi",
+      "contact": "test@test.com",
+      "ownerId": "116d372f-29d6-46c0-8993-eef3170aba0e",
+      "status": "Rented/Exchanged",
+      "coverImageUrl": null
+    },
+    {
+      "id": "36debe35-68b7-4c68-9d8d-4f14f5cc33cd",
+      "title": "Geronimo Stilton",
+      "author": "George Orwell3",
+      "genre": "Comedy",
+      "location": "Noida",
+      "contact": "test@test.com",
+      "ownerId": "116d372f-29d6-46c0-8993-eef3170aba0e",
+      "status": "Available",
+      "coverImageUrl": "/uploads/coverImage-1744476129238.jpg"
+    }
+  ]
+}
