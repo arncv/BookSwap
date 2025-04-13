@@ -123,7 +123,7 @@ export default function DashboardPage() {
             </svg>
             Coming Soon
           </h2>
-          <p className="text-purple-500 mb-2">We're working on exciting new features for BookSwap:</p>
+          <p className="text-purple-500 mb-2">We are working on exciting new features for BookSwap:</p>
           <ul className="list-disc list-inside text-purple-400 ml-2 space-y-1">
             <li>In-app messaging between book owners and seekers</li>
             <li>Book condition verification system</li>

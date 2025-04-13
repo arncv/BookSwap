@@ -79,7 +79,7 @@ const BookList: React.FC = () => { // Restore React.FC for clarity
   // Fetch books when component mounts and when filters change
   useEffect(() => {
     fetchBooks();
-  }, [filters]); // Re-fetch when filters change
+  }, [fetchBooks]); // Add fetchBooks to dependency array
 
   // Function to handle status updates via API call
   const handleStatusUpdate = async (bookId: string, newStatus: 'Available' | 'Rented/Exchanged'): Promise<void> => { // Explicit Promise<void>
