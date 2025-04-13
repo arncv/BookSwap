@@ -68,7 +68,51 @@
       "contact": "test@test.com",
       "ownerId": "116d372f-29d6-46c0-8993-eef3170aba0e",
       "status": "Available",
-      "coverImageUrl": "/uploads/coverImage-1744476129238.jpg"
+      "coverImageUrl": null
+    },
+    {
+      "id": "dddddddd-dddd-dddd-dddd-dddddddddddd",
+      "title": "The Alchemist",
+      "author": "Paulo Coelho",
+      "genre": "Philosophy",
+      "location": "Bangalore",
+      "contact": "owner@example.com",
+      "ownerId": "22222222-2222-2222-2222-222222222222",
+      "status": "Rented/Exchanged",
+      "coverImageUrl": null
+    },
+    {
+      "id": "eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee",
+      "title": "Pride and Prejudice",
+      "author": "Jane Austen",
+      "genre": "Romance",
+      "location": "Chennai",
+      "contact": "owner@example.com",
+      "ownerId": "22222222-2222-2222-2222-222222222222",
+      "status": "Available",
+      "coverImageUrl": null
+    },
+    {
+      "id": "ffffffff-ffff-ffff-ffff-ffffffffffff",
+      "title": "The Da Vinci Code",
+      "author": "Dan Brown",
+      "genre": "Mystery",
+      "location": "Hyderabad",
+      "contact": "999999999",
+      "ownerId": "116d372f-29d6-46c0-8993-eef3170aba0e",
+      "status": "Available",
+      "coverImageUrl": null
+    },
+    {
+      "id": "gggggggg-gggg-gggg-gggg-gggggggggggg",
+      "title": "The Hobbit",
+      "author": "J.R.R. Tolkien",
+      "genre": "Fantasy",
+      "location": "Pune",
+      "contact": "owner@example.com",
+      "ownerId": "22222222-2222-2222-2222-222222222222",
+      "status": "Available",
+      "coverImageUrl": null
     }
   ]
 }

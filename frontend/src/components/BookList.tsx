@@ -30,48 +30,56 @@ const BookList: React.FC = () => { // Restore React.FC for clarity
     setFilters(newFilters);
   };
 
-  useEffect(() => {
-    const fetchBooks = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        // Construct API URL with filters
-        let apiUrl = 'http://localhost:3001/api/books';
-        const queryParams = [];
-        if (filters.title) {
-          queryParams.push(`title=${encodeURIComponent(filters.title)}`);
-        }
-        if (filters.location) {
-          queryParams.push(`location=${encodeURIComponent(filters.location)}`);
-        }
-        if (filters.genre) { // Add genre query param
-          queryParams.push(`genre=${encodeURIComponent(filters.genre)}`);
-        }
-        if (queryParams.length > 0) {
-          apiUrl += `?${queryParams.join('&')}`;
-        }
-
-        // Fetch data from the backend API
-        const response = await fetch(apiUrl);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data: Book[] = await response.json(); // API returns an array directly
-        setBooks(data || []); // Set the fetched books
-      } catch (err) {
-        if (err instanceof Error) {
-          setError(`Error fetching books: ${err.message}`);
-        } else {
-          setError('An unknown error occurred while fetching books.');
-        }
-        console.error("Fetch error:", err); // Log error for debugging
-      } finally {
-        setLoading(false);
+  const fetchBooks = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      // Construct API URL with filters
+      let apiUrl = `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api'}/books`;
+      const queryParams = [];
+      if (filters.title) {
+        queryParams.push(`title=${encodeURIComponent(filters.title)}`);
       }
-    };
+      if (filters.location) {
+        queryParams.push(`location=${encodeURIComponent(filters.location)}`);
+      }
+      if (filters.genre) {
+        queryParams.push(`genre=${encodeURIComponent(filters.genre)}`);
+      }
+      if (queryParams.length > 0) {
+        apiUrl += `?${queryParams.join('&')}`;
+      }
 
+      // Enhanced fetch with stronger cache-busting headers
+      const response = await fetch(apiUrl, {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        }
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data: Book[] = await response.json();
+      setBooks(data || []);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(`Error fetching books: ${err.message}`);
+      } else {
+        setError('An unknown error occurred while fetching books.');
+      }
+      console.error("Fetch error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch books when component mounts and when filters change
+  useEffect(() => {
     fetchBooks();
-  }, [filters]); // Add filters to dependency array to refetch on change
+  }, [filters]); // Re-fetch when filters change
 
   // Function to handle status updates via API call
   const handleStatusUpdate = async (bookId: string, newStatus: 'Available' | 'Rented/Exchanged'): Promise<void> => { // Explicit Promise<void>
@@ -81,7 +89,7 @@ const BookList: React.FC = () => { // Restore React.FC for clarity
     }
 
     try {
-      const response = await fetch(`http://localhost:3001/api/books/${bookId}/status`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api'}/books/${bookId}/status`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

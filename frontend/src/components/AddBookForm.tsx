@@ -235,115 +235,217 @@ const AddBookForm: React.FC<AddBookFormProps> = ({ initialData, bookId }) => { /
   const isEditing = !!bookId; // Define isEditing in the component scope for JSX access
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md dark:bg-gray-800">
-      <h2 className="text-2xl font-semibold text-center mb-6 text-purple-700 dark:text-white">
-        {isEditing ? 'Edit Book Details' : 'Add a New Book'}
-      </h2>
-      {/* Display API Error prominently */}
-      {error && (
-        <div className="p-3 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800 border border-red-300" role="alert">
-          <span className="font-medium">Error:</span> {error}
+    <div className="max-w-2xl mx-auto">
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Display API Error and Success messages inline */}
+        <div className="flex flex-col space-y-2">
+          {error && (
+            <div className="p-2 text-xs text-red-700 bg-red-50 rounded-lg border-l-4 border-red-500" role="alert">
+              <div className="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                </svg>
+                <span className="font-medium">Error:</span> {error}
+              </div>
+            </div>
+          )}
+          
+          {success && (
+            <div className="p-2 text-xs text-green-700 bg-green-50 rounded-lg border-l-4 border-green-500" role="alert">
+              <div className="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span className="font-medium">Success:</span> {success}
+              </div>
+            </div>
+          )}
         </div>
-      )}
-      {success && <p className="text-green-500 text-sm">{success}</p>}
 
-      <div>
-        <label htmlFor="title" className="block text-sm font-medium text-gray-700">Title <span className="text-red-500">*</span></label>
-        <input
-          type="text"
-          id="title"
-          value={title}
-          onChange={handleInputChange(setTitle, 'title')}
-          required
-          className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white ${validationErrors.title ? 'border-red-500' : 'border-purple-100 dark:border-gray-600'}`}
-        />
-        {validationErrors.title && <p className="text-red-600 text-sm mt-1">{validationErrors.title}</p>} {/* Adjusted error style */}
-      </div>
+        <div className="grid grid-cols-2 gap-3 bg-white/50 p-3 rounded-lg shadow-sm border border-purple-50">
+          {/* Title field - full width */}
+          <div className="col-span-2">
+            <label htmlFor="title" className="block text-xs font-medium text-purple-700">Book Title <span className="text-red-500">*</span></label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+              </div>
+              <input
+                type="text"
+                id="title"
+                value={title}
+                onChange={handleInputChange(setTitle, 'title')}
+                required
+                placeholder="Enter book title"
+                className={`pl-7 block w-full px-2 py-1.5 bg-white border rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 text-sm ${validationErrors.title ? 'border-red-500' : 'border-purple-200'} hover:border-purple-300`}
+              />
+            </div>
+            {validationErrors.title && <p className="text-red-600 text-xs">{validationErrors.title}</p>}
+          </div>
 
-      <div>
-        <label htmlFor="author" className="block text-sm font-medium text-gray-700">Author <span className="text-red-500">*</span></label>
-        <input
-          type="text"
-          id="author"
-          value={author}
-          onChange={handleInputChange(setAuthor, 'author')}
-          required
-          className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white ${validationErrors.author ? 'border-red-500' : 'border-purple-100 dark:border-gray-600'}`}
-        />
-        {validationErrors.author && <p className="text-red-600 text-sm mt-1">{validationErrors.author}</p>} {/* Adjusted error style */}
-      </div>
+          {/* Author and Genre fields - side by side */}
+          <div>
+            <label htmlFor="author" className="block text-xs font-medium text-purple-700">Author <span className="text-red-500">*</span></label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+              <input
+                type="text"
+                id="author"
+                value={author}
+                onChange={handleInputChange(setAuthor, 'author')}
+                required
+                placeholder="Author's name"
+                className={`pl-7 block w-full px-2 py-1.5 bg-white border rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 text-sm ${validationErrors.author ? 'border-red-500' : 'border-purple-200'} hover:border-purple-300`}
+              />
+            </div>
+            {validationErrors.author && <p className="text-red-600 text-xs">{validationErrors.author}</p>}
+          </div>
 
-      <div>
-        <label htmlFor="genre" className="block text-sm font-medium text-gray-700">Genre</label>
-        <input
-          type="text"
-          id="genre"
-          value={genre}
-          onChange={handleInputChange(setGenre, 'genre')} // No validation needed, but clear errors
-          className="mt-1 block w-full px-3 py-2 border border-purple-100 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-        />
-        {/* No validation error display for optional field */}
-      </div>
+          <div>
+            <label htmlFor="genre" className="block text-xs font-medium text-purple-700">Genre</label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                </svg>
+              </div>
+              <select
+                id="genre"
+                value={genre}
+                onChange={(e) => setGenre(e.target.value)}
+                className="pl-7 block w-full px-2 py-1.5 bg-white border border-purple-200 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 text-sm appearance-none hover:border-purple-300"
+              >
+                <option value="">Select genre</option>
+                <option value="Fiction">Fiction</option>
+                <option value="Non-fiction">Non-fiction</option>
+                <option value="Science Fiction">Science Fiction</option>
+                <option value="Fantasy">Fantasy</option>
+                <option value="Mystery">Mystery</option>
+                <option value="Romance">Romance</option>
+                <option value="Thriller">Thriller</option>
+                <option value="Biography">Biography</option>
+                <option value="History">History</option>
+                <option value="Self-help">Self-help</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
 
-      <div>
-        <label htmlFor="location" className="block text-sm font-medium text-gray-700">Location <span className="text-red-500">*</span></label>
-        <input
-          type="text"
-          id="location"
-          value={location}
-          onChange={handleInputChange(setLocation, 'location')}
-          required
-          className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white ${validationErrors.location ? 'border-red-500' : 'border-purple-100 dark:border-gray-600'}`}
-        />
-        {validationErrors.location && <p className="text-red-600 text-sm mt-1">{validationErrors.location}</p>} {/* Adjusted error style */}
-      </div>
+          {/* Location and Contact fields - side by side */}
+          <div>
+            <label htmlFor="location" className="block text-xs font-medium text-purple-700">Location <span className="text-red-500">*</span></label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <input
+                type="text"
+                id="location"
+                value={location}
+                onChange={handleInputChange(setLocation, 'location')}
+                required
+                placeholder="City or campus location"
+                className={`pl-7 block w-full px-2 py-1.5 bg-white border rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 text-sm ${validationErrors.location ? 'border-red-500' : 'border-purple-200'} hover:border-purple-300`}
+              />
+            </div>
+            {validationErrors.location && <p className="text-red-600 text-xs">{validationErrors.location}</p>}
+          </div>
 
-      <div>
-        <label htmlFor="coverImage" className="block text-sm font-medium text-gray-700">Cover Image</label>
-        <input
-          type="file"
-          id="coverImage"
-          ref={fileInputRef} // Assign ref
-          onChange={handleFileChange} // Use the new handler
-          accept="image/*" // Accept only image files
-          className="mt-1 block w-full text-sm text-gray-500
-                     file:mr-4 file:py-2 file:px-4
-                     file:rounded-md file:border-0
-                     file:text-sm file:font-semibold
-                     file:bg-indigo-50 file:text-indigo-700
-                     hover:file:bg-indigo-100"
-        />
-        {coverImageFile && <p className="text-xs text-gray-500 mt-1">Selected: {coverImageFile.name}</p>}
-      </div>
+          <div>
+            <label htmlFor="contact" className="block text-xs font-medium text-purple-700">Contact Info <span className="text-red-500">*</span></label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <input
+                type="text"
+                id="contact"
+                value={contact}
+                onChange={handleInputChange(setContact, 'contact')}
+                required
+                placeholder="Email or phone number"
+                className={`pl-7 block w-full px-2 py-1.5 bg-white border rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 text-sm ${validationErrors.contact ? 'border-red-500' : 'border-purple-200'} hover:border-purple-300`}
+              />
+            </div>
+            {validationErrors.contact && <p className="text-red-600 text-xs">{validationErrors.contact}</p>}
+          </div>
 
-      <div>
-        <label htmlFor="contact" className="block text-sm font-medium text-gray-700">Contact Info (e.g., email/phone) <span className="text-red-500">*</span></label>
-        <input
-          type="text"
-          id="contact"
-          value={contact}
-          onChange={handleInputChange(setContact, 'contact')}
-          required
-          className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white ${validationErrors.contact ? 'border-red-500' : 'border-purple-100 dark:border-gray-600'}`}
-        />
-        {validationErrors.contact && <p className="text-red-600 text-sm mt-1">{validationErrors.contact}</p>} {/* Adjusted error style */}
-      </div>
-
-      {/* Success Message Display */}
-      {success && (
-        <div className="p-3 my-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800 border border-green-300" role="alert">
-          <span className="font-medium">Success:</span> {success}
+          {/* Cover Image - simplified */}
+          <div className="col-span-2">
+            <label htmlFor="coverImage" className="block text-xs font-medium text-purple-700">Cover Image</label>
+            <div className="mt-1 flex justify-center px-3 py-2 border border-purple-200 border-dashed rounded-md bg-purple-50/30 hover:bg-purple-50 hover:border-purple-300 transition duration-200 ease-in-out">
+              <div className="space-y-1 text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="mx-auto h-6 w-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <div className="flex text-xs text-gray-600">
+                  <label htmlFor="coverImage" className="relative cursor-pointer bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus-within:outline-none">
+                    <span>Upload</span>
+                    <input
+                      type="file"
+                      id="coverImage"
+                      ref={fileInputRef}
+                      onChange={handleFileChange}
+                      accept="image/*"
+                      className="sr-only"
+                    />
+                  </label>
+                  <p className="pl-1">or drag and drop</p>
+                </div>
+              </div>
+            </div>
+            {coverImageFile && (
+              <div className="mt-1 flex items-center text-xs text-purple-600">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                Selected: {coverImageFile.name}
+              </div>
+            )}
+          </div>
         </div>
-      )}
 
-      <button
-        type="submit"
-        disabled={isLoading || !user || user.role !== 'Owner'}
-        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-purple-500 dark:hover:bg-purple-600"
-      >
-        {isLoading ? (isEditing ? 'Updating Book...' : 'Adding Book...') : (isEditing ? 'Update Book' : 'Add Book')}
-      </button>
-    </form>
+        <div className="pt-2">
+          <button
+            type="submit"
+            disabled={isLoading || !user || user.role !== 'Owner'}
+            className="w-full flex justify-center items-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 ease-in-out"
+          >
+            {isLoading ? (
+              <>
+                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                {isEditing ? 'Updating Book...' : 'Adding Book...'}
+              </>
+            ) : (
+              <>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  {isEditing ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                  )}
+                </svg>
+                {isEditing ? 'Update Book' : 'Add Book'}
+              </>
+            )}
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 
