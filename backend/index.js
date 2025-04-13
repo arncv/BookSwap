@@ -6,7 +6,7 @@ const { v4: uuidv4 } = require('uuid');
 const multer = require('multer'); // Import multer
 
 // Basic configuration
-const PORT = process.env.PORT || 3001; // Use environment variable or default to 3001
+const port = process.env.PORT || 3001; // Use environment variable or default to 3001
 const UPLOADS_DIR = 'uploads'; // Define uploads directory constant
 const UPLOADS_PATH = path.join(__dirname, UPLOADS_DIR); // Full path to uploads
 
@@ -547,6 +547,6 @@ app.get('/', (req, res) => {
 });
 
 // Start the server
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Server is running on port ${port}`);
 });
