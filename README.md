@@ -1,35 +1,46 @@
-# Peer-to-Peer Book Exchange Portal
+# Peer-to-Peer Book Exchange Portal (BookSwap)
 
 ## Objective
 
-This application facilitates the exchange or rental of books directly between users. It connects "Book Owners" who want to list their books with "Book Seekers" looking for new reads.
+BookSwap is a mini full-stack web application designed to connect people who want to exchange, rent, or give away books (**Book Owners**) with those looking for new reads (**Book Seekers**). It provides a simple platform for listing books and facilitating peer-to-peer connections within a community.
 
 ## Tech Stack
 
-*   **Frontend:** React, Next.js (App Router), TypeScript, Tailwind CSS
+*   **Frontend:** React, Next.js (v15+ with App Router), TypeScript, Tailwind CSS, shadcn/ui
 *   **Backend:** Node.js, Express, Multer (for file uploads)
-*   **Database:** Simple JSON flat file (`backend/database.json`) for data storage.
-*   **Session Management:** Frontend user sessions persisted using `localStorage`.
+*   **Database:** Simple JSON flat file (`backend/database.json`) for persistent data storage.
+*   **Session Management:** Mock authentication with frontend user session persistence via `localStorage`.
 
 ## Features Implemented
 
-*   **User Profiles:** Basic registration (Name, Mobile, Email, Password, Role - Owner/Seeker).
-*   **Mock User Login:** Users can log in using Email/Password.
+This application includes the following core and bonus features:
+
+*   **User Profiles & Roles:**
+    *   Two distinct user roles: `Owner` (can list books) and `Seeker` (can browse).
+    *   User registration with Name, Mobile Number, Email, Password (plain text), and Role selection.
+    *   User data stored in `database.json`.
+*   **Authentication (Mock):**
+    *   Basic login functionality using Email and Password.
+    *   Redirects users to a relevant dashboard upon successful login.
+    *   Frontend session persistence using `localStorage` to keep users logged in across browser sessions.
 *   **Book Listings:**
-    *   Owners can add new book listings (Title, Author, Genre, Location, Contact, Cover Image).
-    *   Owners can edit their existing book listings.
-    *   Owners can delete their book listings.
-*   **Book Browsing:** Anyone (logged in or not) can browse the available book listings.
-*   **Filtering:** Books can be filtered by Title, Location, and Genre.
-*   **Status Toggle:** Owners can mark their books as "Available" or "Rented/Exchanged".
-*   **Cover Image Upload:** Owners can upload cover images when adding or editing books. Images are stored on the backend.
-*   **Session Persistence:** Frontend user login status is maintained across browser sessions using `localStorage`.
+    *   **Adding Books:** `Owner` users can create new book listings with Title, Author, Genre (optional), Location, Contact Info, and an optional Cover Image.
+    *   **Browsing Books:** All users (logged in or anonymous) can browse the list of available books.
+    *   **Viewing Details:** Each book card displays Title, Author, Location, Contact Info, Status, Cover Image (if available), and Owner details (Name, Email, Mobile).
+*   **Owner Actions (Bonus):**
+    *   **Edit Listings:** Owners can modify the details of their own book listings.
+    *   **Delete Listings:** Owners can remove their book listings. Associated cover images are also deleted from the server.
+    *   **Status Toggle:** Owners can mark their books as "Available" or "Rented/Exchanged".
+*   **Filtering & Searching (Bonus):**
+    *   Users can filter the book list by Title, Location, and Genre in real-time.
+*   **Cover Image Upload (Bonus):**
+    *   Owners can upload a cover image when adding or editing a book. Images are stored in the `backend/uploads/` directory and served statically.
 
 ## Setup & Running Instructions
 
-To run this project locally, you need to set up and run both the backend and frontend services.
+To run this project locally, you need Node.js and npm installed. Follow these steps:
 
-### Backend Setup (Node.js/Express API)
+### 1. Backend API (Node.js/Express)
 
 1.  Navigate to the `backend` directory:
     ```bash
@@ -43,38 +54,40 @@ To run this project locally, you need to set up and run both the backend and fro
     ```bash
     npm start
     ```
-4.  The backend API will start, typically running at `http://localhost:3001`.
-    *   It uses `database.json` within the `backend` directory for storing user and book data.
-    *   Uploaded cover images are stored in the `backend/uploads/` directory (this directory will be created automatically if it doesn't exist).
+4.  The backend API will start, typically listening on `http://localhost:3001`.
+    *   Data is stored in `backend/database.json`.
+    *   Uploaded images are saved in `backend/uploads/` (created automatically).
 
-### Frontend Setup (Next.js App)
+### 2. Frontend Application (Next.js)
 
-1.  Navigate to the `frontend` directory:
+1.  Open a **new terminal window/tab**.
+2.  Navigate to the `frontend` directory:
     ```bash
     cd frontend
     ```
-2.  Install dependencies:
+3.  Install dependencies:
     ```bash
     npm install
     ```
-3.  Start the development server:
+4.  Start the development server:
     ```bash
     npm run dev
     ```
-4.  The frontend application will be accessible at `http://localhost:3000`.
-    *   The frontend is configured to connect to the backend API at `http://localhost:3001`.
+5.  The frontend application will be accessible at `http://localhost:3000`. It is configured to communicate with the backend API at `http://localhost:3001`.
 
 ## AI Tools Used
 
-No specific AI development tools were tracked during this phase of development.
+ROO Code with Boomerand and MCP + Trae
 
-## Current Status
+## Current Status & Potential Improvements
 
-The core features (user registration/login, book listing/browsing) and key bonus features (edit/delete books, filtering, image uploads, status toggle) are implemented.
+The application successfully implements all core requirements and the specified bonus features. It provides a functional foundation for a peer-to-peer book exchange platform.
 
-Future improvements could include:
-*   Enhanced input validation on forms.
-*   UI/UX polishing.
-*   More robust backend authorization.
-*   Implementation of a proper database system.
-*   Deployment setup.
+Potential areas for future improvement include:
+
+*   **Enhanced Validation:** Implement more robust input validation on both frontend forms and backend API endpoints.
+*   **UI/UX Refinements:** Further polish the user interface and improve the overall user experience.
+*   **Security:** Replace mock authentication with a secure system (e.g., password hashing, JWT/session tokens). Implement proper backend authorization beyond basic owner checks.
+*   **Database:** Migrate from the flat JSON file to a more scalable database solution (e.g., PostgreSQL, MongoDB).
+*   **Testing:** Add unit and integration tests for both frontend and backend.
+*   **Deployment:** Formalize deployment scripts and configurations (refer to `DEPLOYMENT.md` for basic steps).
